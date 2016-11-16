@@ -1,11 +1,6 @@
 <?php
 
-require 'DAO/DAOdireccion.php';
-
-
-
-
-
+require_once ($_SERVER['DOCUMENT_ROOT']."/SportNetv1.0/DAO/direccionDAO.php");
 
 
 ?>
@@ -17,16 +12,16 @@ require 'DAO/DAOdireccion.php';
 </head>
 <body>
 
-
-
 <?php
 
-$dao = new DAOdireccion();
+$direcc = new direccionDAO();
+$escuela = new escuelaDAO();
 
-$resultado = $dao->selectDireccionID(1);
+$resultado = $direcc->selectDireccionID(1);
 
 
-print_r ($resultado);
+
+
 
 
 ?>
