@@ -2640,7 +2640,7 @@ textarea:focus {
 .main-header .site-nav .site-links li {
   display: inline-block;
   margin-right: 45px;
-  color: #ffffff;
+  color: #000000;
   text-transform: uppercase;
   font-size: 16px;
   font-weight: 700;
@@ -3137,7 +3137,7 @@ textarea:focus {
 .parallax-box p {
   text-transform: uppercase;
   line-height: 1em;
-  color: #ffffff;
+  color: #000000;
 }
 .parallax-box h1 {
   letter-spacing: 0.08em;

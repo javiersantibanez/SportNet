@@ -18,14 +18,16 @@ class direccionDAO{
 		$aux = array();
 
         if($row = $resultado->num_rows >0){
+
         	$direcc = new Direccion();
+
 	        $row = mysqli_fetch_array($resultado);
 	        $direcc->setCalle($row['calle']);
 	        $direcc->setNumero($row['numero']);
 	        $direcc->setComuna($row['comuna']);
  			array_push($aux, $direcc);
 
- 			return $aux;
+ 			return $direcc;
 		}else{
 			return null;
 		}

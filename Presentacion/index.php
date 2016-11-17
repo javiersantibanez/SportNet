@@ -34,24 +34,24 @@
       <header class="main-header">
          <div class="container">
             <div class="header-content">
-               <a href="index.html">
+               <a href="index.php">
                   <img src="" alt="" />
                </a>
 
                <nav class="site-nav">
                   <ul class="clean-list site-links">
-                     <li>
-                        <a href="#">Inicio</a>
+                     <li style="color: #000000">
+                        <a href="index.php">Inicio</a>
                      </li>
-                     <li>
+                     <li style="color: #000000">
                         <a href="#">Escuelas</a>
                      </li>
-                     <li>
+                     <li style="color: #000000">
                         <a href="#">Añade Tu Escuela</a>
                      </li>
                   </ul>
 
-                  <a href="login.php" class="btn btn-outlined"><?php echo isset($entrada) ? utf8_decode($entrada): 'Ingresar / Registarse' ; ?></a>
+                  <a style="color: #000000" href="login.php" class="btn btn-outlined"><?php echo isset($entrada) ? utf8_decode($entrada): 'Ingresar / Registarse' ; ?></a>
                </nav>
             </div>
          </div>
@@ -61,21 +61,18 @@
       <div class="content-box">
          <!-- Hero Section -->
          <section class="section section-hero">
-            <div class="hero-box">
-               <div class="container">
-                  <div class="hero-text align-center">
-                     <h1>BUSCA TU ESCUELA</h1>
-                     <p>NOSOTROS TE AYUDAMOS A ENCONTRARLA</p>
-                  </div>
 
-                  <form class="destinations-form">
-                     <div class="input-line">
-                        <input type="text" name="destination" value="" class="form-input check-value" placeholder="INGRESA TU COMUNA" />
-                        <button type="button" name="destination-submit" class="form-submit btn btn-special">Buscar Escuela</button>
-                     </div>
-                  </form>
+         <div class="parallax-box">
+            <div class="container">
+               <div class="text align-center">
+                  <h1 style="color:#e7434e" >BUSCAS UNA ESCUELA</h1>
+                  <p style="color:#e7434e">CERCA DE TU HOGAR?</p>
+
+                  <a href="mapa.php" class="btn btn-special no-icon size-2x">BUSCAR</a>
                </div>
             </div>
+         </div>
+            
 
             <!-- Statistics Box -->
             <div class="container">
@@ -249,16 +246,21 @@
       </div>
 
          <!-- Parallax Box -->
-         <div class="parallax-box">
-            <div class="container">
-               <div class="text align-center">
-                  <h1 style="color:#e7434e" >BUSCAS UNA ESCUELA</h1>
-                  <p style="color:#e7434e">CERCA DE TU HOGAR?</p>
+         <div class="hero-box">
+               <div class="container">
+                  <div class="hero-text align-center">
+                     <h1>BUSCA TU ESCUELA</h1>
+                     <p>NOSOTROS TE AYUDAMOS A ENCONTRARLA</p>
+                  </div>
 
-                  <a href="#" class="btn btn-special no-icon size-2x">BUSCAR POR COMUNA</a>
+                  <form class="destinations-form">
+                     <div class="input-line">
+                        <input type="text" name="destination" value="" class="form-input check-value" placeholder="INGRESA TU COMUNA" />
+                        <button type="button" name="destination-submit" class="form-submit btn btn-special">Buscar Escuela</button>
+                     </div>
+                  </form>
                </div>
             </div>
-         </div>
 
          <!-- Ultimas Escuelas -->
          <section class="section section-destination">

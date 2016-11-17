@@ -20,7 +20,7 @@
         position: absolute;
         width: 250px;
         top: 10px;
-        left: 20%;
+        left: 42%;
         z-index: 5;
         background-color: #fff;
         padding: 5px;
@@ -37,94 +37,9 @@
   <body>
    <?php
 
-
-      function buscar(){
-
-      $espe = $_POST['especialidad'];
-    
-      $especialidad ="";
-
-      if($espe == "Natación")
-        $especialidad = $espe;
-      elseif($espe == "Taekwondo")
-        $especialidad = $espe;
-      elseif ($espe == "Futbol") {
-        $especialidad = $espe;
-      }
+      require_once ($_SERVER['DOCUMENT_ROOT']."/SportNetv1.0/funciones.php");
 
 
-      require('conexion.php');
-      
-
-      $consulta ="SELECT Escuela.nombre,Escuela.id_direccion,Escuela.id_especialidad FROM Escuela INNER JOIN Especialidad on Escuela.id_especialidad = Especialidad.id_especialidad WHERE Especialidad.nombre = '$especialidad' ";
-
-      $resultado = mysqli_query($link,$consulta);
-
-      $numero_filas = $resultado->num_rows;
-
-      $i = 1;
-     
-      
-      while ($fila = mysqli_fetch_array($resultado)){
-       
-        $nombre = $fila['nombre'];
-        $direccion = $fila['id_direccion'];
-        $consulta2= "SELECT calle,numero,comuna FROM Direccion WHERE id_direccion= $direccion";
-        $resultado2= mysqli_query($link,$consulta2);
-
-
-        if($row = $resultado->num_rows >0){
-
-          $row = mysqli_fetch_array($resultado2);
-          $direcc = $row['calle'];
-          $direcc .= $row['numero'];
-          $direcc .= ' ';
-          $direcc .= $row['comuna'];
-        }
-        //esto busca las lat y log segun la direc
-        $aux= urlencode($direcc);
-         
-        //Buscamos la direccion en el servicio de google
-        $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$aux.'&sensor=false');
-         
-         //decodificamos lo que devuelve google, que esta en formato json
-        $output= json_decode($geocode);
-         
-        //Extraemos la informacion que nos interesa
-        $lat = $output->results[0]->geometry->location->lat;
-        $long = $output->results[0]->geometry->location->lng;
-
-    
-
-        $lista[$i][0]=$nombre;
-        $lista[$i][1]=$lat;
-        $lista[$i][2]=$long;
-        
-
-        $i++;
-
-
-      }
-
-      return $lista;
-
-    
-      
-    }
-
-    function calcularDistacia(){
-
-    $html = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?origins=Santa+Isabel+6150+cerro+navia&destinations=Nueva+Extremadura+5270+Quinta+Normal&mode=driving&language=es-ES&key=AIzaSyBb1wFH0HCVnnBa0xIA5vP2HZtKrjnya1w");
-
-    $json = json_decode($html,true);
-
-    $distancia = $json['rows'][0]['elements'][0]['distance']['value'];
-  
-    return $distancia;
-
-    }
-
-  
     ?>
 
 
@@ -133,6 +48,7 @@
       <input id="setear" type="button" value="Aplicar">
     </div>
    
+   <center>
 
     <script type="text/javascript">
 
@@ -167,7 +83,7 @@
                 alert('Error al modificar tu ubicación: ');
               }
             });
-          }
+        }
 
 
 
@@ -184,20 +100,13 @@
             infoWindow.setContent('Tu estas aquí');
             map.setCenter(pos);
 
-            var aux = <?php echo json_encode($_POST['distancia']);?>;
-            var rangoBusqueda = parseInt(aux);
-            var distancia = <?php echo json_encode(calcularDistacia());?>;
         
-
-            if(distancia<rangoBusqueda){
-
-             
-
-              var a =<?php echo json_encode($_POST['especialidad']); ?> ;
+            var a = <?php echo json_encode($_POST['especialidad']);?>;
 
 
-              if(a=='Natación'){
-                var matriz = <?php echo json_encode(buscar()); ?>;
+
+              if(a=='Natacion'){
+                var matriz = <?php echo json_encode(buscarEscuela($_POST['especialidad'])); ?>;
 
 
                 for (var i=1; i<=1000 ;i++){          
@@ -260,7 +169,8 @@
 
               if(a=='Taekwondo'){
           
-                var matriz = <?php echo json_encode(buscar()); ?>;
+                var matriz = <?php echo json_encode(buscarEscuela($_POST['especialidad'])); ?>;
+
 
 
                 for (var i=1; i<=1000 ;i++){          
@@ -325,75 +235,74 @@
               if(a=='Futbol'){
 
       
-              var matriz = <?php echo json_encode(buscar()); ?>;
+                var matriz = <?php echo json_encode(buscarEscuela($_POST['especialidad'])); ?>;
 
 
-              for (var i=1; i<=1000 ;i++){          
-                for(var j=0; j<3;j++){
-                    if(j==0){
-                      var nombre = matriz[i][j]; 
-                    }
-                    else if(j==1){
-                      var latitud = matriz[i][j];
-                    }
-                    else if(j==2){
-                      var longitud = matriz[i][j];
-                    }
-                }
+                for (var i=0; i<=1000 ;i++){          
+                  for(var j=0; j<3;j++){
+                      if(j==0){
+                        var nombre = matriz[i][j]; 
+                      }
+                      else if(j==1){
+                        var latitud = matriz[i][j];
+                      }
+                      else if(j==2){
+                        var longitud = matriz[i][j];
+                      }
+                  }
 
 
-                var place = new google.maps.LatLng(latitud,longitud);
-                var image = { 
+                  var place = new google.maps.LatLng(latitud,longitud);
+                  var image = { 
 
-                url: 'img/futbol3.png',
-                scaledSize: new google.maps.Size(25,25),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(0, 32)
+                  url: 'img/futbol3.png',
+                  scaledSize: new google.maps.Size(25,25),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(0, 32)
 
-                };
+                  };
 
-                var shape = {
-                  coords: [1, 1, 1, 20, 18, 20, 18, 1],
-                  type: 'poly'
-                };   
+                  var shape = {
+                    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                    type: 'poly'
+                  };   
 
-                var marker = new google.maps.Marker({
-                  position: place,
-                  title: nombre,
-                  map: map,
-                  icon: image
+                  var marker = new google.maps.Marker({
+                    position: place,
+                    title: nombre,
+                    map: map,
+                    icon: image
+                    
+
+                    });
+                   
+
+                  var link = '<a href="login.php">'+nombre+'</a>';
+                  attachSecretMessage(marker,link);
+     
+
+                  // Attaches an info window to a marker with the provided message. When the
+                  // marker is clicked, the info window will open with the secret message.
                   
 
-                  });
-                 
+                  function attachSecretMessage(marker, secretMessage) {
+                    var infowindow = new google.maps.InfoWindow({
+                      content: secretMessage
+                    });
 
-                var link = '<a href="login.php">'+nombre+'</a>';
-              attachSecretMessage(marker,link);
-   
-
-                // Attaches an info window to a marker with the provided message. When the
-                // marker is clicked, the info window will open with the secret message.
-                
-
-                function attachSecretMessage(marker, secretMessage) {
-                  var infowindow = new google.maps.InfoWindow({
-                    content: secretMessage
-                  });
-
-                  marker.addListener('click', function() {
-                    infowindow.open(marker.get('map'), marker);
-                  });
+                    marker.addListener('click', function() {
+                      infowindow.open(marker.get('map'), marker);
+                    });
+                  }
+                                
                 }
-                              
-                }}
+              }
               
-            }
+            
 
-
-
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          } );
+          },function() {
+                handleLocationError(true, infoWindow, map.getCenter());
+            } );
         } else {
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
@@ -422,7 +331,7 @@
             
             
             if(a){
-              document.getElementById("especialidad").value = 'Natación';
+              document.getElementById("especialidad").value = 'Natacion';
               
             }
             if(b){
@@ -457,7 +366,7 @@
      <form name="filtro" action="mapa.php" method="POST" onsubmit="filtrar()"  >
 
       <div class="checkbox">
-        <label><input type="checkbox" name="Natacion" value="Natación">Natación</label>
+        <label><input type="checkbox" name="Natacion" value="Natacion">Natación</label>
       </div>
       <div class="checkbox">
         <label><input type="checkbox" name="Karate" value="Taekwondo">Taekwondo</label>
@@ -481,6 +390,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBb1wFH0HCVnnBa0xIA5vP2HZtKrjnya1w&signed_in=true&callback=initMap"
       async defer>
     </script>
+
+    </center>
     
   </body>
 </html>
