@@ -1,6 +1,10 @@
 
 <?php
-   
+require_once("Business/EscuelaB.php");
+require_once("Business/PersonaB.php");
+require_once("Business/DireccionB.php");
+require_once("Business/EspecialidadB.php");
+  /* 
    session_start();
    require 'conexion.php';
 
@@ -13,7 +17,10 @@
     if(isset($_SESSION ["id_usuario"])){
          $entrada= "Bienvenido " .$row['nombre'];
     }
+*/
 
+
+    
 ?>
 
 
@@ -26,8 +33,8 @@
       <meta name="author" content="Grupo 7" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Raleway:400,700" rel="stylesheet" />
-      <link href="img/favicon.png" type="image/x-icon" rel="shortcut icon" />
-      <link href="css/screen.css" rel="stylesheet" />
+      <link href="Presentacion/img/favicon.png" type="image/x-icon" rel="shortcut icon" />
+      <link href="Presentacion/css/screen.css" rel="stylesheet" />
    </head>
    <body class="home" id="page">
       <!-- Header -->
@@ -78,17 +85,33 @@
             <div class="container">
                <div class="statistics-box">
                   <div class="statistics-item">
-                     <span class="value">+10</span>
-                     <p class="title">Comunas</p>
+                     <span class="value">
+                     <?php 
+                        $EspecialidadB = new EspecialidadB();
+                        echo $EspecialidadB->totalEspecialidad();
+                     ?> 
+                     </span>
+                     <p class="title">Disciplinas</p>
                   </div>
 
                   <div class="statistics-item">
-                     <span class="value">+120</span>
+                     <span class="value">
+                     <?php 
+                        $EscuelaB = new EscuelaB();
+                        echo $EscuelaB->totalEscuelas();
+                     ?>
+                        
+                     </span>
                      <p class="title">Escuelas</p>
                   </div>
 
                   <div class="statistics-item">
-                     <span class="value">+1500</span>
+                     <span class="value">
+                        <?php 
+                           $PersonaB = new PersonaB();
+                           echo $PersonaB->totalPersonas();
+                        ?>
+                     </span>
                      <p class="title">Alumnos</p>
                   </div>
 
@@ -118,7 +141,7 @@
                   <div class="col-sm-12 col-xs-24">
                      <div class="boat-box">
                         <div class="box-cover">
-                           <img src="img/escuelas/ucatolica.jpg" alt="destination image" />
+                           <img src="Presentacion/img/escuelas/ucatolica.jpg" alt="destination image" />
                         </div>
 
                         <span class="boat-price">$35.000 Cuota Inscripcion</span>
@@ -138,7 +161,7 @@
                   <div class="col-sm-12 col-xs-24">
                      <div class="boat-box">
                         <div class="box-cover">
-                           <img src="img/escuelas/escuelacolo.jpg" alt="destination image" />
+                           <img src="Presentacion/img/escuelas/escuelacolo.jpg" alt="destination image" />
                         </div>
 
                         <span class="boat-price">$25.000 Cuota Inscripcion</span>
@@ -158,7 +181,7 @@
                   <div class="col-sm-12 col-xs-24">
                      <div class="boat-box">
                         <div class="box-cover">
-                           <img src="img/escuelas/uchile.jpg" alt="destination image" />
+                           <img src="Presentacion/img/escuelas/uchile.jpg" alt="destination image" />
                         </div>
 
                         <span class="boat-price">$30.000 Cuota Inscripcion</span>
@@ -178,7 +201,7 @@
                   <div class="col-sm-12 col-xs-24">
                      <div class="boat-box">
                         <div class="box-cover">
-                           <img src="img/escuelas/fevochi.jpg" alt="destination image" />
+                           <img src="Presentacion/img/escuelas/fevochi.jpg" alt="destination image" />
                         </div>
 
                         <span class="boat-price">$30.000 Cuota Inscripcion</span>
@@ -199,7 +222,7 @@
                      <div class="col-sm-12 col-xs-24">
                         <div class="boat-box">
                            <div class="box-cover">
-                              <img src="img/boat-2.jpg" alt="destination image" />
+                              <img src="Presentacion/img/boat-2.jpg" alt="destination image" />
                            </div>
 
                            <span class="boat-price">€950 / day</span>
@@ -219,7 +242,7 @@
                      <div class="col-sm-12 col-xs-24">
                         <div class="boat-box">
                            <div class="box-cover">
-                              <img src="img/boat-1.jpg" alt="destination image" />
+                              <img src="Presentacion/img/boat-1.jpg" alt="destination image" />
                            </div>
 
                            <span class="boat-price">€580 / day</span>
@@ -279,7 +302,7 @@
                      <div class="destination-box">
                         <div class="box-cover">
                            <a href="#">
-                              <img src="img/escuelas/natacionprovi.jpg" alt="destination image" />
+                              <img src="Presentacion/img/escuelas/natacionprovi.jpg" alt="destination image" />
                            </a>
                         </div>
 
@@ -298,7 +321,7 @@
                      <div class="destination-box">
                         <div class="box-cover">
                            <a href="#">
-                              <img src="img/escuelas/union.JPG" alt="destination image" />
+                              <img src="Presentacion/img/escuelas/union.JPG" alt="destination image" />
                            </a>
                         </div>
 
@@ -317,7 +340,7 @@
                      <div class="destination-box">
                         <div class="box-cover">
                            <a href="#">
-                              <img src="img/escuelas/hockeyfrances.jpg" alt="destination image" />
+                              <img src="Presentacion/img/escuelas/hockeyfrances.jpg" alt="destination image" />
                            </a>
                         </div>
 
@@ -336,7 +359,7 @@
                      <div class="destination-box">
                         <div class="box-cover">
                            <a href="#">
-                              <img src="img/escuelas/escuelaaudax.jpg" alt="destination image" />
+                              <img src="Presentacion/img/escuelas/escuelaaudax.jpg" alt="destination image" />
                            </a>
                         </div>
 
@@ -355,7 +378,7 @@
                      <div class="destination-box">
                         <div class="box-cover">
                            <a href="#">
-                              <img src="img/escuelas/altenis.jpg" alt="destination image" />
+                              <img src="Presentacion/img/escuelas/altenis.jpg" alt="destination image" />
                            </a>
                         </div>
 
@@ -375,7 +398,7 @@
                         <div class="destination-box">
                            <div class="box-cover">
                               <a href="#">
-                                 <img src="img/destination-4.jpg" alt="destination image" />
+                                 <img src="Presentacion/img/destination-4.jpg" alt="destination image" />
                               </a>
                            </div>
 
@@ -394,7 +417,7 @@
                         <div class="destination-box">
                            <div class="box-cover">
                               <a href="#">
-                                 <img src="img/destination-5.jpg" alt="destination image" />
+                                 <img src="Presentacion/img/destination-5.jpg" alt="destination image" />
                               </a>
                            </div>
 
@@ -413,7 +436,7 @@
                         <div class="destination-box">
                            <div class="box-cover">
                               <a href="#">
-                                 <img src="img/destination-3.jpg" alt="destination image" />
+                                 <img src="Presentacion/img/destination-3.jpg" alt="destination image" />
                               </a>
                            </div>
 
@@ -507,7 +530,7 @@
       </footer>
 
       <!-- Scripts -->
-      <script src="js/jquery.js"></script>
-      <script src="js/functions.js"></script>
+      <script src="Presentacion/js/jquery.js"></script>
+      <script src="Presentacion/js/functions.js"></script>
    </body>
 </html>
