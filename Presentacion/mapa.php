@@ -100,9 +100,15 @@
             infoWindow.setContent('Tu estas aquí');
             map.setCenter(pos);
 
+            var posicion = pos.lat;
+            posicion = posicion + " " +pos.lng;
+
+
         
             var a = <?php echo json_encode($_POST['especialidad']);?>;
+            var rango = <?php echo json_encode($_POST['distancia']);?>;
 
+            
 
 
               if(a=='Natacion'){
@@ -297,6 +303,72 @@
                                 
                 }
               }
+
+              if(a=='Tenis'){
+
+      
+                var matriz = <?php echo json_encode(buscarEscuela($_POST['especialidad'])); ?>;
+
+
+                for (var i=0; i<=1000 ;i++){          
+                  for(var j=0; j<3;j++){
+                      if(j==0){
+                        var nombre = matriz[i][j]; 
+                      }
+                      else if(j==1){
+                        var latitud = matriz[i][j];
+                      }
+                      else if(j==2){
+                        var longitud = matriz[i][j];
+                      }
+                  }
+
+
+                  var place = new google.maps.LatLng(latitud,longitud);
+                  var image = { 
+
+                  url: 'img/tenis.png',
+                  scaledSize: new google.maps.Size(25,25),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(0, 32)
+
+                  };
+
+                  var shape = {
+                    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                    type: 'poly'
+                  };   
+
+                  var marker = new google.maps.Marker({
+                    position: place,
+                    title: nombre,
+                    map: map,
+                    icon: image
+                    
+
+                    });
+                   
+
+                  var link = '<a href="login.php">'+nombre+'</a>';
+                  attachSecretMessage(marker,link);
+     
+
+                  // Attaches an info window to a marker with the provided message. When the
+                  // marker is clicked, the info window will open with the secret message.
+                  
+
+                  function attachSecretMessage(marker, secretMessage) {
+                    var infowindow = new google.maps.InfoWindow({
+                      content: secretMessage
+                    });
+
+                    marker.addListener('click', function() {
+                      infowindow.open(marker.get('map'), marker);
+                    });
+                  }
+                                
+                }
+              }
               
             
 
@@ -328,7 +400,9 @@
             var a =document.filtro.Natacion.checked;
             var b =document.filtro.Karate.checked;
             var c =document.filtro.Futbol.checked;
-            
+            var d =document.filtro.Tenis.checked;
+
+            document.getElementById("posicion").value = "-33.4472452 -70.6606296 ";
             
             if(a){
               document.getElementById("especialidad").value = 'Natacion';
@@ -340,6 +414,11 @@
             }
             if(c){
               document.getElementById("especialidad").value = 'Futbol';
+              
+            }
+
+            if(d){
+              document.getElementById("especialidad").value = 'Tenis';
               
             }
             
@@ -373,14 +452,17 @@
       </div>
       <div class="checkbox">
         <label><input type="checkbox" name="Futbol" value="Futbol">Futbol</label>
+      </div>
+      <div class="checkbox">
+        <label><input type="checkbox" name="Tenis" value="Tenis">Tenis</label>
         <input type="hidden" name="especialidad" id="especialidad">
-
       </div>
       <div class= "combobox">
           <label><input type="radio" id="cinco" name="cinco">5 km</label>
           <label><input type="radio" id="diez" name="diez">10 km</label>
           <label><input type="radio" id="veinte" name="veinte">20 km</label>
           <input type="hidden" id="distancia" name="distancia">
+          <input type="hidden" id="posicion" name="posicion">
 
       </div>
       <input type="submit" value ="Aplicar Filtros">

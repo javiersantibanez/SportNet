@@ -16,22 +16,35 @@
   $sha1_pass = sha1($contrasena);
 
 
-  $consulta = "SELECT email, contraseña FROM Persona WHERE email='$email' AND contraseña = '$sha1_pass' ";
+  $consulta = "SELECT email, contraseña, id_tipo FROM Persona WHERE email='$email' AND contraseña = '$sha1_pass' ";
 
   $resultado = mysqli_query($link,$consulta);
 
     if($row = $resultado->num_rows >0){
 
       $row = $resultado->fetch_assoc();
+
+      if($row['id_tipo'] == 1){
+
       $_SESSION['id_usuario'] = $row['email'];
       
       header("location: userProfile.php");
+
+      }
+
+      else{
+        header("location: administracion.php");
+      }
+      
 
     }
     else {
         $error = "El email o contraseña son incorrectos";
     }
    }
+
+
+
 
 ?>
 

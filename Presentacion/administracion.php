@@ -3,19 +3,33 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>SportNet - Dashboard</title>
     <!-- Bootstrap Styles-->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet"/>
     <!-- FontAwesome Styles-->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="css/font-awesome.css" rel="stylesheet"/>
     <!-- Morris Chart Styles-->
-    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <link href="js/morris/morris-0.4.3.min.css" rel="stylesheet"/>
     <!-- Custom Styles-->
-    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+    <link href="css/custom-styles.css" rel="stylesheet"/>
     <!-- Google Fonts-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css's/>
 </head>
+
+
+<?php
+
+    require ('conexion.php');
+
+
+    $consulta = "UPDATE Escuela SET visitas = visitas +1  WHERE id_escuela = 1";
+
+    $resulta2 = mysqli_query($link,$consulta);
+
+
+
+?>
 
 <body>
     <div id="wrapper">
@@ -36,6 +50,11 @@
                         <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
+                    <li>
+                        <a href="logout.php" target="_self"><button  type="button" class="btn btn2 btn-danger btn-sm">Cerrar Sesión</button>
+
+                    </li>
+
                         <li>
                             <a href="#">
                                 <div>
@@ -304,7 +323,26 @@
                         <div class="panel panel-primary text-center no-boder bg-color-green">
                             <div class="panel-body">
                                 <i class="fa fa-bar-chart-o fa-5x"></i>
-                                <h3>8,457</h3>
+                                <br>
+
+                                <h3>
+                                <?php
+
+
+                                $consulta = "SELECT visitas FROM Escuela WHERE id_escuela = 1";
+
+                                $resultado = mysqli_query($link,$consulta);
+
+                                
+
+                                $row = $resultado->fetch_assoc();
+                                $visitas = $row['visitas'];
+                                
+
+                                echo $visitas;
+
+                                ?></h3>
+                                
                             </div>
                             <div class="panel-footer back-footer-green">
                                 Visitas Totales
@@ -435,7 +473,7 @@
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Ultimos Usuarios Registrados
+                                Alumnos Registrados
                             </div> 
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -445,81 +483,32 @@
                                                 <th>ID</th>
                                                 <th>Nombre</th>
                                                 <th>Apellido</th>
-                                                <th>Usuario</th>
+                                     
                                                 <th>Correo Electronico</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>John</td>
-                                                <td>Doe</td>
-                                                <td>John15482</td>
-                                                <td>name@site.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Kimsila</td>
-                                                <td>Marriye</td>
-                                                <td>Kim1425</td>
-                                                <td>name@site.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Rossye</td>
-                                                <td>Nermal</td>
-                                                <td>Rossy1245</td>
-                                                <td>name@site.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Richard</td>
-                                                <td>Orieal</td>
-                                                <td>Rich5685</td>
-                                                <td>name@site.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Jacob</td>
-                                                <td>Hielsar</td>
-                                                <td>Jac4587</td>
-                                                <td>name@site.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Wrapel</td>
-                                                <td>Dere</td>
-                                                <td>Wrap4585</td>
-                                                <td>name@site.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>Wrapel</td>
-                                                <td>Dere</td>
-                                                <td>Wrap4585</td>
-                                                <td>name@site.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>Wrapel</td>
-                                                <td>Dere</td>
-                                                <td>Wrap4585</td>
-                                                <td>name@site.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>9</td>
-                                                <td>Wrapel</td>
-                                                <td>Dere</td>
-                                                <td>Wrap4585</td>
-                                                <td>name@site.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>10</td>
-                                                <td>Wrapel</td>
-                                                <td>Dere</td>
-                                                <td>Wrap4585</td>
-                                                <td>name@site.com</td>
-                                            </tr>
+
+                                        <?php
+
+
+                                            $consulta = "SELECT * FROM Persona";
+
+                                            $resultado = mysqli_query($link,$consulta);     
+
+                                            while ($fila = mysqli_fetch_array($resultado)){
+                                                echo "<tr>";
+                                                echo "<td> 1 </td>";
+                                                echo "<td>". $fila['nombre']."</td>";
+                                                echo "<td>". $fila['apellido']."</td>";
+                                                echo "<td>". $fila['email']."</td>";
+                                                echo "</tr>";
+                                            }
+                                            
+
+                                        ?>
+                                           
+                                            
 
                                         </tbody>
                                     </table>
